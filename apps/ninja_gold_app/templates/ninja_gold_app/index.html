@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold Django version</title>
+    <style>
+        .container{
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .box{
+            display: inline-block;
+            padding: 10px;
+        }
+        .box:hover{
+            background: orange;
+        }
+        h1:hover{
+            background: gold;
+            width: 250px;
+        }
+        .bottom{
+            max-height: 150px;
+            overflow-y:scroll;
+            border: 2px solid black;
+            padding: 0px 5px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background:white;
+            box-shadow: 1px 1px 3px 1px white;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-track-piece {
+            background: gray;
+        }
+        ::-webkit-scrollbar-thumb {
+            background:red;
+            border-radius: 10px;
+            width: 10px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Gold: {{ request.session.sum }}</h1>
+        
+        <div class="box">
+            <h2 style="text-align: center">Farm</h2>
+            <p>(earns 10-20 gold)</p>
+            <form action="/farm" method="POST">
+            {% csrf_token %}
+            <input type='submit' value='Find Gold!'>
+        </div>
+            </form>
+        <div class="box">
+            <h2 style="text-align: center">Cave</h2>
+            <p>(earns 5-10 gold)</p>
+            <form action="/cave" method="POST">
+            {% csrf_token %}
+            <input type='submit' value='Find Gold!'>
+            </form>
+        </div>
+        <div class="box">
+            <h2 style="text-align: center">House</h2>
+            <p>(earns 2-5 gold)</p>
+            <form action="/house" method="POST">
+            {% csrf_token %}
+            <input type='submit' value='Find Gold!'>
+            </form>
+        </div>
+        <div class="box">
+            <h2 style="text-align: center">Casino</h2>
+            <p>(earns/takes 0-50 gold)</p>
+            <form action="/casino" method="POST">
+            {% csrf_token %}
+            <input type='submit' value='Find Gold!'>
+            </form>
+        </div>
+        <p>Activities:</p>
+        <a href="/reset">Clear Session</a>
+        <div class="bottom">
+
+            {% for key in request.session.activity %}
+            <p><span style="color: {{key.color}}">{{ key.gold }} gold from the {{ key.bldg }}. ({{ key.time }})</span></p>
+            {% endfor %}
+            
+        </div>
+    </div>
+</body>
+</html>
